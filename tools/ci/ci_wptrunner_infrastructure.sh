@@ -6,7 +6,7 @@ WPT_ROOT=$SCRIPT_DIR/../..
 cd $WPT_ROOT
 
 test_infrastructure() {
-    TERM=dumb ./wpt run --log-mach - --yes --manifest ~/meta/MANIFEST.json --metadata infrastructure/metadata/ --install-fonts --install-webdriver $1 $PRODUCT infrastructure/
+    TERM=dumb ./wpt run --log-mach - --yes --manifest ~/meta/MANIFEST.json --metadata infrastructure/metadata/ --install-fonts --install-webdriver "$@" $PRODUCT infrastructure/
 }
 
 main() {
@@ -15,11 +15,11 @@ main() {
     for PRODUCT in "${PRODUCTS[@]}"; do
         if [[ "$PRODUCT" == "chrome" ]]; then
             # Taskcluster machines do not have GPUs, so use software rendering via --enable-swiftshader.
-            test_infrastructure "--binary=$(which google-chrome-unstable) --enable-swiftshader --channel dev" "$1"
+            test_infrastructure "--binary=$(which google-chrome-unstable) --enable-swiftshader --channel dev" "$@"
         else
-            test_infrastructure "--binary=~/build/firefox/firefox" "$1"
+            test_infrastructure "--binary=~/build/firefox/firefox" "$@"
         fi
     done
 }
 
-main $1
+main "$@"

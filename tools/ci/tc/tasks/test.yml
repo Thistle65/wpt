@@ -529,7 +529,7 @@ tasks:
         - wpt-base
         - trigger-pr
         - browser-firefox
-      command: ./tools/ci/ci_wptrunner_infrastructure.sh
+      command: ./tools/ci/ci_wptrunner_infrastructure.sh --instrument-to-file-file=/home/test/artifacts/instrument.log
       install:
         - python3-pip
         - libnss3-tools
